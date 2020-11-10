@@ -2,20 +2,24 @@ package fr.soro.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
 @Table(name = "ouvrage")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Ouvrage implements Serializable {
+public class Ouvrage implements Serializable {
 	/**
 	 * 
 	 */
@@ -26,25 +30,32 @@ public abstract class Ouvrage implements Serializable {
 	private String titre;
 	private String auteur;
 	private Date dateParution;
-	private Date dateDisponible;
 	private String description;
-	private boolean disponible;
+	private String categorie;
+	
+	private  int nbreExemplaireDispo=0;
+	@JsonBackReference(value = "ouvr-ex")
+	@OneToMany(mappedBy = "ouvrage", fetch = FetchType.EAGER)
+	private List<Exemplaire> exemplaires;
 	
 	public Ouvrage() {
 		super();
 		// TODO Auto-generated constructor stub
+		this.setNbreExemplaireDispo();
 	}
 	
-	public Ouvrage(Long id, String titre, String auteur, Date dateParution, Date dateDisponible, String description,
-			boolean disponible) {
+
+	public Ouvrage(Long id, String titre, String auteur, Date dateParution, String description, String categorie,
+			int nbreExemplaireDispo, List<Exemplaire> exemplaires) {
 		super();
 		this.id = id;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.dateParution = dateParution;
-		this.dateDisponible = dateDisponible;
 		this.description = description;
-		this.disponible = disponible;
+		this.categorie = categorie;
+		this.nbreExemplaireDispo = nbreExemplaireDispo;
+		this.exemplaires = exemplaires;
 	}
 
 	public Long getId() {
@@ -53,6 +64,19 @@ public abstract class Ouvrage implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
+	
+	public String getCategorie() {
+		return categorie;
+	}
+
+
+	public void setCategorie(String categorie) {
+		this.categorie = categorie;
+	}
+
+
 	public String getTitre() {
 		return titre;
 	}
@@ -71,23 +95,52 @@ public abstract class Ouvrage implements Serializable {
 	public void setDateParution(Date dateParution) {
 		this.dateParution = dateParution;
 	}
-	public Date getDateDisponible() {
-		return dateDisponible;
-	}
-	public void setDateDisponible(Date dateDisponible) {
-		this.dateDisponible = dateDisponible;
-	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public boolean isDisponible() {
-		return disponible;
+	
+	
+	
+	
+	public int getNbreExemplaireDispo() {
+		return nbreExemplaireDispo;
 	}
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
+
+
+
+	public void setNbreExemplaireDispo(int nbreExemplaireDispo) {
+		this.nbreExemplaireDispo = nbreExemplaireDispo;
 	}
+	
+	public void setNbreExemplaireDispo() {
+		if(this.exemplaires != null) {
+			for(Exemplaire expl: this.exemplaires) {
+				if( expl.isDisponible()) {
+					this.nbreExemplaireDispo++;
+				}
+			}
+		}
+	}
+
+
+
+
+	public List<Exemplaire> getExemplaires() {
+		return exemplaires;
+	}
+
+
+
+	public void setExemplaires(List<Exemplaire> exemplaires) {
+		this.exemplaires = exemplaires;
+	}
+
+
+
+
+	
 	
 }

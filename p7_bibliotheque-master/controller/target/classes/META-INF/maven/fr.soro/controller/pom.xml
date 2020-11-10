@@ -95,7 +95,15 @@
             <version>0.8.0</version>
         </dependency -->
         
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+		
+        
+        
         <dependencies>
+        <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+		</dependency>
         <dependency>
 			<groupId>fr.soro</groupId>
 			<artifactId>modele</artifactId>

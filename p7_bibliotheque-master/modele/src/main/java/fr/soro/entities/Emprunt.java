@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Table(name = "emprunt")
 public class Emprunt implements Serializable {
 
+	
 	/**
 	 * 
 	 */
@@ -34,5 +35,82 @@ public class Emprunt implements Serializable {
 	@OneToMany(mappedBy = "emprunt")
 	List<Exemplaire> exemplaires;
 	
+	public Emprunt() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
+	public Emprunt(Long id, Date dateDebut, Date dateEcheance, boolean prolongation, int depassement, User user,
+			List<Exemplaire> exemplaires) {
+		super();
+		this.id = id;
+		this.dateDebut = dateDebut;
+		this.dateEcheance = dateEcheance;
+		this.prolongation = prolongation;
+		this.depassement = depassement;
+		this.user = user;
+		this.exemplaires = exemplaires;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getDateDebut() {
+		return dateDebut;
+	}
+
+	public void setDateDebut(Date dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
+	public Date getDateEcheance() {
+		return dateEcheance;
+	}
+
+	public void setDateEcheance(Date dateEcheance) {
+		this.dateEcheance = dateEcheance;
+	}
+
+	public boolean isProlongation() {
+		return prolongation;
+	}
+
+	public void setProlongation(boolean prolongation) {
+		this.prolongation = prolongation;
+	}
+
+	public int getDepassement() {
+		return depassement;
+	}
+
+	public void setDepassement(int depassement) {
+		this.depassement = depassement;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<Exemplaire> getExemplaires() {
+		return exemplaires;
+	}
+
+	public void setExemplaires(List<Exemplaire> exemplaires) {
+		this.exemplaires = exemplaires;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 }

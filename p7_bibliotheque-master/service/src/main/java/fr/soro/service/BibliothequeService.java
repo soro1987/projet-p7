@@ -37,4 +37,12 @@ public class BibliothequeService {
 	public void deleted(Long id) {
 		this.bibliothequeRepository.deleteById(id);
 	}
+
+	public List<Bibliotheque> getAllBibliotheque() {
+		return this.bibliothequeRepository.findAll();
+	}
+
+	public Bibliotheque save(Bibliotheque bibliotheque) {
+		return this.bibliothequeRepository.save(bibliotheque);
+	}
 }

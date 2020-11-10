@@ -38,18 +38,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/signin").permitAll()
                 .antMatchers("/signup").permitAll()
-                .antMatchers(HttpMethod.GET, "/user").permitAll()
-                .antMatchers(HttpMethod.GET, "/exemplaires/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/user").hasRole("USER")
+                .antMatchers("/exemplaires/**").hasRole("ADMIN")
+                .antMatchers("/bibliotheques/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()
             .apply(new JwtSecurityConfigurer(jwtTokenProvider));
         //@formatter:on
+        
+
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
+    
 }
 

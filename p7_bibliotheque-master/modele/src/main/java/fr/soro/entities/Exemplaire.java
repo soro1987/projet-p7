@@ -14,11 +14,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "exemplaire")
-@PrimaryKeyJoinColumn(name = "id")
-public class Exemplaire extends Ouvrage {
+public class Exemplaire {
 
 	/**
 	 * 
@@ -28,6 +29,14 @@ public class Exemplaire extends Ouvrage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private boolean disponible;
+	
+	@JsonBackReference(value = "ouvr-ex")
+	@ManyToOne
+	@JoinColumn(name = "ouvrage")
+	private Ouvrage ouvrage;
+	
+	@JsonBackReference(value = "ouvr-bib")
 	@ManyToOne
 	@JoinColumn(name = "bibliotheque")
 	private Bibliotheque bibliotheque;
@@ -40,17 +49,45 @@ public class Exemplaire extends Ouvrage {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Exemplaire(Long id, String titre, String auteur, Date dateParution, Date dateDisponible, String description,
-			boolean disponible) {
-		super(id, titre, auteur, dateParution, dateDisponible, description, disponible);
-		// TODO Auto-generated constructor stub
+
+	public Exemplaire(Long id, boolean disponible, Ouvrage ouvrage, Bibliotheque bibliotheque, Emprunt emprunt) {
+		super();
+		this.id = id;
+		this.disponible = disponible;
+		this.ouvrage = ouvrage;
+		this.bibliotheque = bibliotheque;
+		this.emprunt = emprunt;
 	}
-	/*public Bibliotheque getBibliotheque() {
+
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Ouvrage getOuvrage() {
+		return ouvrage;
+	}
+
+
+	public void setOuvrage(Ouvrage ouvrage) {
+		this.ouvrage = ouvrage;
+	}
+
+
+	public Bibliotheque getBibliotheque() {
 		return bibliotheque;
 	}
+
+
 	public void setBibliotheque(Bibliotheque bibliotheque) {
 		this.bibliotheque = bibliotheque;
-	}*/
+	}
+
+
 	public Emprunt getEmprunt() {
 		return emprunt;
 	}
@@ -58,5 +95,11 @@ public class Exemplaire extends Ouvrage {
 		this.emprunt = emprunt;
 	}
 	
+	public boolean isDisponible() {
+		return disponible;
+	}
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
 	
 }

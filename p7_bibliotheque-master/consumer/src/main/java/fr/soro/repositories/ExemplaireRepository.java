@@ -8,13 +8,4 @@ import org.springframework.stereotype.Repository;
 
 import fr.soro.entities.Exemplaire;
 @Repository
-public interface ExemplaireRepository extends JpaRepository<Exemplaire, Long> {
-
-	List<Exemplaire> findByTitre(String titre);
-
-	List<Exemplaire> findByDateParution(Date parution);
-
-	List<Exemplaire> findByAuteur(String auteur);
-
-	
-}
+public interface ExemplaireRepository extends JpaRepository<Exemplaire, Long> {}

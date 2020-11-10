@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 public class Bibliotheque implements Serializable {
@@ -24,6 +27,7 @@ public class Bibliotheque implements Serializable {
 	private String email;
 	private String description;
 	
+	@JsonManagedReference(value = "ouvr-bib")
 	@OneToMany(mappedBy = "bibliotheque")
 	List<Exemplaire> exemplaires;
 	public Bibliotheque() {
