@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -34,7 +35,7 @@ public class Ouvrage implements Serializable {
 	private String categorie;
 	
 	private  int nbreExemplaireDispo=0;
-	@JsonBackReference(value = "ouvr-ex")
+	@JsonManagedReference(value = "ouvr-ex")
 	@OneToMany(mappedBy = "ouvrage", fetch = FetchType.EAGER)
 	private List<Exemplaire> exemplaires;
 	

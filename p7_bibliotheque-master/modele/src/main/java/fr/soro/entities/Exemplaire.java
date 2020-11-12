@@ -1,5 +1,6 @@
 package fr.soro.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "exemplaire")
-public class Exemplaire {
+public class Exemplaire implements Serializable{
 
 	/**
 	 * 
@@ -40,9 +41,11 @@ public class Exemplaire {
 	@ManyToOne
 	@JoinColumn(name = "bibliotheque")
 	private Bibliotheque bibliotheque;
+	@JsonBackReference(value = "em-user")
+	private User user;
 	
+	@JsonBackReference(value = "ex-emp")
 	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "emprunt_id")
 	private Emprunt emprunt;
 	public Exemplaire() {
@@ -101,5 +104,15 @@ public class Exemplaire {
 	public void setDisponible(boolean disponible) {
 		this.disponible = disponible;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 	
 }

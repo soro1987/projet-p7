@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import fr.soro.entities.Exemplaire;
 @Repository
-public interface ExemplaireRepository extends JpaRepository<Exemplaire, Long> {}
+public interface ExemplaireRepository extends JpaRepository<Exemplaire, Long> {
+	public Exemplaire getExemplaireById( Long id );
+}

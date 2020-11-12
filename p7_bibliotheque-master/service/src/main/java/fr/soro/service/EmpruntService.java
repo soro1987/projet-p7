@@ -25,13 +25,13 @@ import fr.soro.repositories.UserRepository;
 
 @Service
 public class EmpruntService {
-	@Resource
+	@Autowired
 	private EmpruntRepository empruntRepository;
 	
-	@Resource
+	@Autowired
 	private UserRepository userRepository;
 	
-	@Resource
+	@Autowired
 	private ExemplaireRepository exemplaireRepository;
 
 	public EmpruntService(EmpruntRepository empruntRepository) {
@@ -67,6 +67,7 @@ public class EmpruntService {
 	}
 	
 	public Emprunt save(Long idUser, Long idExmplaire, Emprunt emprunt) {
+//		Emprunt emprunt = new Emprunt();
 		emprunt.setDateDebut(new Date());
 		
 		Calendar calendrier = Calendar.getInstance();
@@ -78,7 +79,8 @@ public class EmpruntService {
 		User user = this.userRepository.getOne(idUser);
 		emprunt.setUser(user);
 		
-		Exemplaire exemplaire = this.exemplaireRepository.getOne(idExmplaire);
+		Exemplaire exemplaire = this.exemplaireRepository.getExemplaireById(idExmplaire);
+		
 		emprunt.getExemplaires().add(exemplaire);
 		exemplaire.setDisponible(false);
 		

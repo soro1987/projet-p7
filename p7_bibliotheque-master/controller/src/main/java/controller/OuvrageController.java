@@ -52,6 +52,7 @@ public class OuvrageController {
 		@GetMapping(value = "/ouvrages")
 		public ResponseEntity<List<Ouvrage>> getAllOuvrages() {
 			List<Ouvrage> ouvrages = ouvrageService.getAll();
+			ouvrages.forEach(o-> {o.setNbreExemplaireDispo();});
 			return new ResponseEntity<List<Ouvrage>>(ouvrages, HttpStatus.FOUND);
 		}
 		

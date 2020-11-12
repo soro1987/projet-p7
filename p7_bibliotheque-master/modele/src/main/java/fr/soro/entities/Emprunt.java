@@ -1,6 +1,7 @@
 package fr.soro.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "emprunt")
@@ -29,15 +33,16 @@ public class Emprunt implements Serializable {
 	private Date dateEcheance;
 	private boolean prolongation;
 	private int depassement;
+	@JsonBackReference(value = "em-user")
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	@JsonManagedReference(value = "ex-emp")
 	@OneToMany(mappedBy = "emprunt")
-	List<Exemplaire> exemplaires;
+	List<Exemplaire> exemplaires = new ArrayList<Exemplaire>();
 	
 	public Emprunt() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Emprunt(Long id, Date dateDebut, Date dateEcheance, boolean prolongation, int depassement, User user,
