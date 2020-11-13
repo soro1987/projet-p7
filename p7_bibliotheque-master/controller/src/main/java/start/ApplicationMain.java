@@ -30,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import fr.soro.entities.User;
 
@@ -71,5 +72,10 @@ public class ApplicationMain{
 	public static void main(String[] args) {
 		SpringApplication.run(ApplicationMain.class, args);
 	}
+	
+	 @Bean
+	 public RestTemplate getRestTemplate() {
+	      return new RestTemplate();
+	 }
 	 	
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import fr.soro.entities.Emprunt;
 import fr.soro.service.EmpruntService;
+
 @CrossOrigin("*")
 @RestController
 public class EmpruntController {

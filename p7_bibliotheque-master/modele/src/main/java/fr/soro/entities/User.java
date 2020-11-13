@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -50,7 +51,8 @@ public class User implements UserDetails, Serializable {
 	private int user_active = 1;
 	private String login="admin";
 
-	@JsonManagedReference(value = "em-user")
+	@JsonIgnore
+	//@JsonManagedReference(value = "em-user")
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Emprunt> emprunts = new ArrayList<Emprunt>();
 

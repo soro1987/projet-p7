@@ -33,7 +33,7 @@ public class Emprunt implements Serializable {
 	private Date dateEcheance;
 	private boolean prolongation;
 	private int depassement;
-	@JsonBackReference(value = "em-user")
+	//@JsonBackReference(value = "em-user")
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
