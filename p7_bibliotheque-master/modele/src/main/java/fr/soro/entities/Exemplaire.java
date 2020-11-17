@@ -35,7 +35,7 @@ public class Exemplaire implements Serializable{
 	@JsonBackReference(value = "ouvr-ex")
 	@ManyToOne
 	@JoinColumn(name = "ouvrage")
-	private Ouvrage ouvrage;
+	private OuvrageBean ouvrage;
 	
 	@JsonBackReference(value = "ouvr-bib")
 	@ManyToOne
@@ -53,7 +53,7 @@ public class Exemplaire implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Exemplaire(Long id, boolean disponible, Ouvrage ouvrage, Bibliotheque bibliotheque, Emprunt emprunt) {
+	public Exemplaire(Long id, boolean disponible, OuvrageBean ouvrage, Bibliotheque bibliotheque, Emprunt emprunt) {
 		super();
 		this.id = id;
 		this.disponible = disponible;
@@ -71,12 +71,12 @@ public class Exemplaire implements Serializable{
 	}
 
 
-	public Ouvrage getOuvrage() {
+	public OuvrageBean getOuvrage() {
 		return ouvrage;
 	}
 
 
-	public void setOuvrage(Ouvrage ouvrage) {
+	public void setOuvrage(OuvrageBean ouvrage) {
 		this.ouvrage = ouvrage;
 	}
 

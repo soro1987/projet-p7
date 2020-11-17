@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "ouvrage")
-public class Ouvrage implements Serializable {
+public class OuvrageBean implements Serializable {
 	/**
 	 * 
 	 */
@@ -39,14 +39,14 @@ public class Ouvrage implements Serializable {
 	@OneToMany(mappedBy = "ouvrage", fetch = FetchType.EAGER)
 	private List<Exemplaire> exemplaires;
 	
-	public Ouvrage() {
+	public OuvrageBean() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.setNbreExemplaireDispo();
 	}
 	
 
-	public Ouvrage(Long id, String titre, String auteur, Date dateParution, String description, String categorie,
+	public OuvrageBean(Long id, String titre, String auteur, Date dateParution, String description, String categorie,
 			int nbreExemplaireDispo, List<Exemplaire> exemplaires) {
 		super();
 		this.id = id;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import fr.soro.entities.Bibliotheque;
 import fr.soro.entities.Exemplaire;
-import fr.soro.entities.Ouvrage;
+import fr.soro.entities.OuvrageBean;
 import fr.soro.repositories.BibliothequeRepository;
 import fr.soro.repositories.ExemplaireRepository;
 import fr.soro.repositories.OuvrageRepository;
@@ -35,7 +35,7 @@ public class ExemplaireService {
 	}
 	
 	public Exemplaire save(Long idOuvrage, Long idBiblio, Exemplaire exemplaire) {
-		Ouvrage ouvrage = this.ouvrageRepository.getOne(idOuvrage);
+		OuvrageBean ouvrage = this.ouvrageRepository.getOne(idOuvrage);
 		Bibliotheque bibliotheque = this.bibliothequeRepository.getOne(idBiblio);
 		exemplaire.setDisponible(true);
 		exemplaire.setBibliotheque(bibliotheque);

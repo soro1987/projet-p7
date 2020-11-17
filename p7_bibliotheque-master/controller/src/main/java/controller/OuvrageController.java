@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import fr.soro.entities.Ouvrage;
+import fr.soro.entities.OuvrageBean;
 import fr.soro.service.OuvrageService;
 
 @RestController
@@ -28,10 +28,10 @@ public class OuvrageController {
 		
 		@PostMapping(value = "/ouvrages")
 		@Transactional
-		public ResponseEntity<Ouvrage> createOuvrage(@RequestBody Ouvrage ouvrage)
+		public ResponseEntity<OuvrageBean> createOuvrage(@RequestBody OuvrageBean ouvrage)
 		{
-			Ouvrage ouvrageSaved = ouvrageService.save(ouvrage);		
-	 		return new ResponseEntity<Ouvrage>(ouvrageSaved, HttpStatus.CREATED);
+			OuvrageBean ouvrageSaved = ouvrageService.save(ouvrage);		
+	 		return new ResponseEntity<OuvrageBean>(ouvrageSaved, HttpStatus.CREATED);
 	 	}
 		
 		@DeleteMapping(value = "/ouvrages")
@@ -43,48 +43,48 @@ public class OuvrageController {
 
 		
 		@PutMapping(value = "/ouvrages")
-		public ResponseEntity<Ouvrage> updateOuvrage(@RequestBody Ouvrage ouvrage , @RequestParam(value = "id", required = true) Long id) {
-			Ouvrage ouvrageFound = ouvrageService.updated(id, ouvrage);
-			return new ResponseEntity<Ouvrage>(ouvrageFound, HttpStatus.OK);
+		public ResponseEntity<OuvrageBean> updateOuvrage(@RequestBody OuvrageBean ouvrage , @RequestParam(value = "id", required = true) Long id) {
+			OuvrageBean ouvrageFound = ouvrageService.updated(id, ouvrage);
+			return new ResponseEntity<OuvrageBean>(ouvrageFound, HttpStatus.OK);
 		}
 		
 
 		@GetMapping(value = "/ouvrages")
-		public ResponseEntity<List<Ouvrage>> getAllOuvrages() {
-			List<Ouvrage> ouvrages = ouvrageService.getAll();
+		public ResponseEntity<List<OuvrageBean>> getAllOuvrages() {
+			List<OuvrageBean> ouvrages = ouvrageService.getAll();
 			ouvrages.forEach(o-> {o.setNbreExemplaireDispo();});
-			return new ResponseEntity<List<Ouvrage>>(ouvrages, HttpStatus.FOUND);
+			return new ResponseEntity<List<OuvrageBean>>(ouvrages, HttpStatus.FOUND);
 		}
 		
 		
 		@GetMapping(value = "/ouvrages/{id}")
-		public ResponseEntity<Ouvrage> getOne(@PathVariable(value = "id") Long id) {
-			Ouvrage ouvrageFound = ouvrageService.getOne(id);
-			return new ResponseEntity<Ouvrage>(ouvrageFound, HttpStatus.FOUND);
+		public ResponseEntity<OuvrageBean> getOne(@PathVariable(value = "id") Long id) {
+			OuvrageBean ouvrageFound = ouvrageService.getOne(id);
+			return new ResponseEntity<OuvrageBean>(ouvrageFound, HttpStatus.FOUND);
 		}
 		
 		@GetMapping(value = "/ouvrages-titre/{titre}")
-		public ResponseEntity<List<Ouvrage>> getBytitre(@PathVariable(value = "titre") String titre) {
-			List<Ouvrage> ouvrageFound = ouvrageService.getByTitre(titre);
-			return new ResponseEntity<List<Ouvrage>>(ouvrageFound, HttpStatus.FOUND);
+		public ResponseEntity<List<OuvrageBean>> getBytitre(@PathVariable(value = "titre") String titre) {
+			List<OuvrageBean> ouvrageFound = ouvrageService.getByTitre(titre);
+			return new ResponseEntity<List<OuvrageBean>>(ouvrageFound, HttpStatus.FOUND);
 		}
 		
 		@GetMapping(value = "/ouvrages-auteur/{auteur}")
-		public ResponseEntity<List<Ouvrage>> getByAuteur(@PathVariable(value = "auteur") String auteur) {
-			List<Ouvrage> ouvrageFound = ouvrageService.getByAuteur(auteur);
-			return new ResponseEntity<List<Ouvrage>>(ouvrageFound, HttpStatus.FOUND);
+		public ResponseEntity<List<OuvrageBean>> getByAuteur(@PathVariable(value = "auteur") String auteur) {
+			List<OuvrageBean> ouvrageFound = ouvrageService.getByAuteur(auteur);
+			return new ResponseEntity<List<OuvrageBean>>(ouvrageFound, HttpStatus.FOUND);
 		}
 		
 		@GetMapping(value = "/ouvrages-cat/{categorie}")
-		public ResponseEntity<List<Ouvrage>> getByCategorie(@PathVariable(value = "categorie") String categorie) {
-			List<Ouvrage> ouvrageFound = ouvrageService.getByCategorie(categorie);
-			return new ResponseEntity<List<Ouvrage>>(ouvrageFound, HttpStatus.FOUND);
+		public ResponseEntity<List<OuvrageBean>> getByCategorie(@PathVariable(value = "categorie") String categorie) {
+			List<OuvrageBean> ouvrageFound = ouvrageService.getByCategorie(categorie);
+			return new ResponseEntity<List<OuvrageBean>>(ouvrageFound, HttpStatus.FOUND);
 		}
 		
 		@GetMapping(value = "/ouvrages/{parution}")
-		public ResponseEntity<List<Ouvrage>> getByParution(@PathVariable(value = "parution") Date parution) {
-			List<Ouvrage> ouvrageFound = ouvrageService.getByParution(parution);
-			return new ResponseEntity<List<Ouvrage>>(ouvrageFound, HttpStatus.FOUND);
+		public ResponseEntity<List<OuvrageBean>> getByParution(@PathVariable(value = "parution") Date parution) {
+			List<OuvrageBean> ouvrageFound = ouvrageService.getByParution(parution);
+			return new ResponseEntity<List<OuvrageBean>>(ouvrageFound, HttpStatus.FOUND);
 		}
 
 }

@@ -6,18 +6,18 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import fr.soro.entities.Ouvrage;
+import fr.soro.entities.OuvrageBean;
 @Repository
-public interface OuvrageRepository extends JpaRepository<Ouvrage, Long> {
+public interface OuvrageRepository extends JpaRepository<OuvrageBean, Long> {
 
 	
 	
-	List<Ouvrage> findByTitre(String titre);
+	List<OuvrageBean> findByTitre(String titre);
 
-	List<Ouvrage> findByAuteur(String auteur);
+	List<OuvrageBean> findByAuteur(String auteur);
 
 
-	List<Ouvrage> findByDateParution(Date parution);
+	List<OuvrageBean> findByDateParution(Date parution);
 
-	List<Ouvrage> findByCategorie(String categorie);
+	List<OuvrageBean> findByCategorie(String categorie);
 	}

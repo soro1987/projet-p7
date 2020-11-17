@@ -34,19 +34,7 @@ import org.springframework.web.client.RestTemplate;
 
 import fr.soro.entities.User;
 
-/*@SpringBootApplication(scanBasePackages = {
-		"fr.soro",
-		"fr.soro.dtao", 
-		"fr.soro.repositories",
-		"fr.soro.entities"
-		}, exclude = {DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class})
-@ComponentScan({
-	"fr.soro",
-	"fr.soro.dtao", 
-	"fr.soro.repositories",
-	"fr.soro.entities"
-	})
-*/
+
 @Configuration
 @PropertySource(value = {"application.properties"})
 @EnableAutoConfiguration

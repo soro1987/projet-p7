@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import fr.soro.entities.Ouvrage;
+import fr.soro.entities.OuvrageBean;
 import fr.soro.repositories.OuvrageRepository;
 
 @Service
@@ -14,32 +14,32 @@ public class OuvrageService {
 		@Autowired
 		private OuvrageRepository ouvrageRepository;
 		
-		public Ouvrage getOne(Long id) {
+		public OuvrageBean getOne(Long id) {
 			return ouvrageRepository.getOne(id);
 		}
 		
-		public List<Ouvrage> getAll(){
+		public List<OuvrageBean> getAll(){
 			return ouvrageRepository.findAll();
 		}
 	    
-		public List<Ouvrage> getByTitre(String titre) {
+		public List<OuvrageBean> getByTitre(String titre) {
 			return ouvrageRepository.findByTitre(titre);
 		}
 		
-		public List<Ouvrage> getByAuteur(String auteur) {
+		public List<OuvrageBean> getByAuteur(String auteur) {
 			return ouvrageRepository.findByAuteur(auteur);
 		}
 		
-		public List<Ouvrage> getByCategorie(String categorie) {
+		public List<OuvrageBean> getByCategorie(String categorie) {
 			return ouvrageRepository.findByCategorie(categorie);
 		}
 		
-		public List<Ouvrage> getByParution(Date parution) {
+		public List<OuvrageBean> getByParution(Date parution) {
 			return ouvrageRepository.findByDateParution(parution);
 		}
 		
-		public Ouvrage updated(Long id ,Ouvrage ouvrage) {
-			Ouvrage ouvrageUpdate = this.getOne(id);
+		public OuvrageBean updated(Long id ,OuvrageBean ouvrage) {
+			OuvrageBean ouvrageUpdate = this.getOne(id);
 			ouvrageUpdate.setTitre(ouvrage.getTitre());
 			ouvrageUpdate.setAuteur(ouvrage.getAuteur());
 			ouvrageUpdate.setDescription(ouvrage.getDescription());
@@ -51,7 +51,7 @@ public class OuvrageService {
 	    this.ouvrageRepository.deleteById(id);
 		}
 		
-		public Ouvrage save(Ouvrage ouvrage) {
+		public OuvrageBean save(OuvrageBean ouvrage) {
 			return this.ouvrageRepository.save(ouvrage);
 		}
 		
