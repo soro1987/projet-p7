@@ -1,10 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import fr.soro.entities.Emprunt;
+import fr.soro.entities.Exemplaire;
 import fr.soro.service.EmpruntService;
 
 @CrossOrigin("*")
@@ -49,10 +49,28 @@ public class EmpruntController {
  	}
 
 	
-	@GetMapping(value = "/emprunts")
+	@GetMapping(value = "/emprunts-user/{idUser}")
+	public ResponseEntity<List<Emprunt>> getUserEmprunt(@PathVariable(value = "idUser") Long idUser) {
+		List<Emprunt> userEmprunts =new ArrayList<Emprunt>();
+		List<Emprunt> allEmprunts = empruntService.getAllEmprunt();
+		for (Emprunt emprunt : allEmprunts) {
+		    if (emprunt.getUser().getId()==idUser) {
+		    	userEmprunts.add(emprunt);
+			}
+		}
+		return new ResponseEntity<List<Emprunt>>(userEmprunts, HttpStatus.FOUND);
+	}
+	
+	@GetMapping(value = "/emprunts-user")
 	public ResponseEntity<List<Emprunt>> getAllEmprunt() {
 		List<Emprunt> empruntsUpdated = empruntService.getAllEmprunt();
 		return new ResponseEntity<List<Emprunt>>(empruntsUpdated, HttpStatus.FOUND);
+	}
+	
+	@GetMapping(value = "/emprunts/expired")
+	public ResponseEntity<List<Emprunt>> getExpireEmprunt() {
+		List<Emprunt> empruntsExpire = empruntService.getAllExpireEmprunt();
+		return new ResponseEntity<List<Emprunt>>(empruntsExpire, HttpStatus.FOUND);
 	}
 	
 	

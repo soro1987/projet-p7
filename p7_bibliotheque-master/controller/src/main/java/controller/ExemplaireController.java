@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.soro.entities.Bibliotheque;
 import fr.soro.entities.Exemplaire;
 import fr.soro.service.ExemplaireService;
 
@@ -30,6 +33,18 @@ public class ExemplaireController {
 	public ResponseEntity<Exemplaire> createExemplaire(@PathVariable(value = "idOuvrage") Long idOuvrage, @PathVariable(value = "idBiblio") Long idBiblio, @RequestBody Exemplaire exemplaire) {
 		Exemplaire exemplaireSaved = exemplaireService.save(idOuvrage, idBiblio, exemplaire);
 		return new ResponseEntity<Exemplaire>(exemplaireSaved, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value = "/exemplaires-biblio/{idBiblio}")
+	public ResponseEntity<List<Exemplaire>> getBiblioExemplaire(@PathVariable(value = "idBiblio") Long idBiblio,Bibliotheque biblio) {
+		List<Exemplaire> allExemplaires = exemplaireService.getAll();
+		List<Exemplaire> exemplaireByBiblio = new ArrayList<Exemplaire>();
+		for (Exemplaire exemplaire : allExemplaires) {
+		    if (exemplaire.getBibliotheque().getId()==idBiblio) {
+		    	exemplaireByBiblio.add(exemplaire);
+			}
+		}
+		    return new ResponseEntity<List<Exemplaire>>(exemplaireByBiblio, HttpStatus.FOUND);
 	}
 
 	@DeleteMapping(value = "/exemplaires")
@@ -50,5 +65,12 @@ public class ExemplaireController {
 		Exemplaire exemplairesFound = exemplaireService.getOneById(id);
 		return new ResponseEntity<Exemplaire>(exemplairesFound, HttpStatus.FOUND);
 	}
+	
+	@GetMapping("/ouvrages/{id}/exemplairecount")
+	public Map<String, Object> getOuvrageCountBybibliotheque(@PathVariable(value = "id") Long ouvrageId){
+		Map<String, Object> ouvrageCountBybiblio = exemplaireService.getExempleCountByBibliotheque(ouvrageId);
+	return ouvrageCountBybiblio;
+}
+
 
 }

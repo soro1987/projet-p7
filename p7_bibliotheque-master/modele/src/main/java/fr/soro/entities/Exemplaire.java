@@ -16,6 +16,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -35,9 +36,10 @@ public class Exemplaire implements Serializable{
 	@JsonBackReference(value = "ouvr-ex")
 	@ManyToOne
 	@JoinColumn(name = "ouvrage")
-	private OuvrageBean ouvrage;
+	private Ouvrage ouvrage;
 	
 	@JsonBackReference(value = "ouvr-bib")
+	
 	@ManyToOne
 	@JoinColumn(name = "bibliotheque")
 	private Bibliotheque bibliotheque;
@@ -53,7 +55,7 @@ public class Exemplaire implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Exemplaire(Long id, boolean disponible, OuvrageBean ouvrage, Bibliotheque bibliotheque, Emprunt emprunt) {
+	public Exemplaire(Long id, boolean disponible, Ouvrage ouvrage, Bibliotheque bibliotheque, Emprunt emprunt) {
 		super();
 		this.id = id;
 		this.disponible = disponible;
@@ -71,12 +73,12 @@ public class Exemplaire implements Serializable{
 	}
 
 
-	public OuvrageBean getOuvrage() {
+	public Ouvrage getOuvrage() {
 		return ouvrage;
 	}
 
 
-	public void setOuvrage(OuvrageBean ouvrage) {
+	public void setOuvrage(Ouvrage ouvrage) {
 		this.ouvrage = ouvrage;
 	}
 

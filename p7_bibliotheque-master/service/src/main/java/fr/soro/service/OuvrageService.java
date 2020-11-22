@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import fr.soro.entities.OuvrageBean;
+import fr.soro.entities.Ouvrage;
 import fr.soro.repositories.OuvrageRepository;
 
 @Service
@@ -14,32 +14,37 @@ public class OuvrageService {
 		@Autowired
 		private OuvrageRepository ouvrageRepository;
 		
-		public OuvrageBean getOne(Long id) {
+		public List<Ouvrage> getByTitreAuteur(String motcle) {
+			return ouvrageRepository.findByTitreAuteur("%"+motcle+"%","%"+motcle+"%");
+		}
+		
+		public Ouvrage getOne(Long id) {
 			return ouvrageRepository.getOne(id);
 		}
 		
-		public List<OuvrageBean> getAll(){
+		public List<Ouvrage> getAll(){
 			return ouvrageRepository.findAll();
 		}
 	    
-		public List<OuvrageBean> getByTitre(String titre) {
+		public List<Ouvrage> getByTitre(String titre) {
 			return ouvrageRepository.findByTitre(titre);
 		}
 		
-		public List<OuvrageBean> getByAuteur(String auteur) {
+		
+		public List<Ouvrage> getByAuteur(String auteur) {
 			return ouvrageRepository.findByAuteur(auteur);
 		}
 		
-		public List<OuvrageBean> getByCategorie(String categorie) {
+		public List<Ouvrage> getByCategorie(String categorie) {
 			return ouvrageRepository.findByCategorie(categorie);
 		}
 		
-		public List<OuvrageBean> getByParution(Date parution) {
+		public List<Ouvrage> getByParution(Date parution) {
 			return ouvrageRepository.findByDateParution(parution);
 		}
 		
-		public OuvrageBean updated(Long id ,OuvrageBean ouvrage) {
-			OuvrageBean ouvrageUpdate = this.getOne(id);
+		public Ouvrage updated(Long id ,Ouvrage ouvrage) {
+			Ouvrage ouvrageUpdate = this.getOne(id);
 			ouvrageUpdate.setTitre(ouvrage.getTitre());
 			ouvrageUpdate.setAuteur(ouvrage.getAuteur());
 			ouvrageUpdate.setDescription(ouvrage.getDescription());
@@ -51,7 +56,7 @@ public class OuvrageService {
 	    this.ouvrageRepository.deleteById(id);
 		}
 		
-		public OuvrageBean save(OuvrageBean ouvrage) {
+		public Ouvrage save(Ouvrage ouvrage) {
 			return this.ouvrageRepository.save(ouvrage);
 		}
 		

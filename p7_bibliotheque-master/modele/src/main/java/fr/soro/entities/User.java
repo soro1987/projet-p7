@@ -49,7 +49,7 @@ public class User implements UserDetails, Serializable {
 	private String email;
 	private String telephone;
 	private int user_active = 1;
-	private String login="admin";
+//	private String login="admin";
 
 	@JsonIgnore
 	//@JsonManagedReference(value = "em-user")
@@ -166,13 +166,13 @@ public class User implements UserDetails, Serializable {
 		this.user_active = user_active;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
+//	public String getLogin() {
+//		return login;
+//	}
+//
+//	public void setLogin(String login) {
+//		this.login = login;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

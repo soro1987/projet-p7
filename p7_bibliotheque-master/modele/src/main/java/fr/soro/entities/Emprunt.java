@@ -1,6 +1,7 @@
 package fr.soro.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "emprunt")
 public class Emprunt implements Serializable {
@@ -29,15 +32,16 @@ public class Emprunt implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date dateDebut;
+	private Date dateDebut;//LocaleDate
 	private Date dateEcheance;
 	private boolean prolongation;
 	private int depassement;
-	//@JsonBackReference(value = "em-user")
+	@JsonBackReference(value = "em-user")
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@JsonManagedReference(value = "ex-emp")
+	
+	@JsonManagedReference(value = "ex-emp")	
 	@OneToMany(mappedBy = "emprunt")
 	List<Exemplaire> exemplaires = new ArrayList<Exemplaire>();
 	

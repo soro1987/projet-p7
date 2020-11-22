@@ -17,7 +17,9 @@ import fr.soro.entities.User;
 import fr.soro.repositories.UserRepository;
 import fr.soro.security.jwt.JwtTokenProvider;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -35,20 +37,37 @@ public class AuthenticationController {
     @Autowired
     UserRepository users;
 
+    
+    
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody User data) {
 
         try {
             String username = data.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            String token = jwtTokenProvider.createToken(username, this.users.findByUsername(username).getRoles());
-
-            Map<Object, Object> model = new HashMap<>();
-            model.put("username", username);
-            model.put("token", token);
-            return ok(model);
+            String token = jwtTokenProvider.createToken(username, this.users.findByUsername(username).getRoles());       
+            return ok(token);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
     }
-}
+    
+} 
+    
+//    @PostMapping("/signin")
+//    public ResponseEntity signin(@RequestBody User data) {
+//
+//        try {
+//            String username = data.getUsername();
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+//            String token = jwtTokenProvider.createToken(username, this.users.findByUsername(username).getRoles());
+//
+//            Map<Object, Object> model = new HashMap<>();
+//            model.put("username", username);
+//            model.put("token", token);
+//            return ok(model);
+//        } catch (AuthenticationException e) {
+//            throw new BadCredentialsException("Invalid username/password supplied");
+//        }
+//    }
+

@@ -15,12 +15,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "ouvrage")
-public class OuvrageBean implements Serializable {
+public class Ouvrage implements Serializable {
 	/**
 	 * 
 	 */
@@ -30,6 +32,8 @@ public class OuvrageBean implements Serializable {
 	private Long id;
 	private String titre;
 	private String auteur;
+	
+//	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date dateParution;
 	private String description;
 	private String categorie;
@@ -39,14 +43,14 @@ public class OuvrageBean implements Serializable {
 	@OneToMany(mappedBy = "ouvrage", fetch = FetchType.EAGER)
 	private List<Exemplaire> exemplaires;
 	
-	public OuvrageBean() {
+	public Ouvrage() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.setNbreExemplaireDispo();
 	}
 	
 
-	public OuvrageBean(Long id, String titre, String auteur, Date dateParution, String description, String categorie,
+	public Ouvrage(Long id, String titre, String auteur, Date dateParution, String description, String categorie,
 			int nbreExemplaireDispo, List<Exemplaire> exemplaires) {
 		super();
 		this.id = id;

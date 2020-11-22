@@ -2,6 +2,8 @@ package fr.soro.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import fr.soro.entities.Bibliotheque;
 import fr.soro.entities.Exemplaire;
-import fr.soro.entities.OuvrageBean;
+import fr.soro.entities.Ouvrage;
 import fr.soro.repositories.BibliothequeRepository;
 import fr.soro.repositories.ExemplaireRepository;
 import fr.soro.repositories.OuvrageRepository;
@@ -30,12 +32,16 @@ public class ExemplaireService {
 		return exemplaireRepository.findAll();
 	}
 	
+//	public List<Exemplaire> getAllByBiblio(Bibliotheque biblio ,Long biblioId){
+//		return exemplaireRepository.findByIdBibliotheque(biblio,biblioId);
+//	}
+	
 	public void delete(Long id) {
 		this.exemplaireRepository.deleteById(id);
 	}
 	
 	public Exemplaire save(Long idOuvrage, Long idBiblio, Exemplaire exemplaire) {
-		OuvrageBean ouvrage = this.ouvrageRepository.getOne(idOuvrage);
+		Ouvrage ouvrage = this.ouvrageRepository.getOne(idOuvrage);
 		Bibliotheque bibliotheque = this.bibliothequeRepository.getOne(idBiblio);
 		exemplaire.setDisponible(true);
 		exemplaire.setBibliotheque(bibliotheque);
@@ -53,5 +59,15 @@ public class ExemplaireService {
 		return this.exemplaireRepository.getOne(id);
 	}
 
+	
+	public Map<String, Object> getExempleCountByBibliotheque(Long ouvrageId){
+	return	this.bibliothequeRepository.findAll()
+		.stream()
+		.collect(Collectors.toMap(Bibliotheque::getNom, biblio ->			
+			this.exemplaireRepository.countByOuvrageIdAndBibliothequeNomAndDisponibleTrue(ouvrageId, biblio.getNom())			
+		 ));
+		
+		
+	}
 	
 }

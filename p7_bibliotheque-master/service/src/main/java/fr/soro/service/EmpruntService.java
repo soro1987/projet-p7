@@ -1,19 +1,11 @@
 package fr.soro.service;
 
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-
-
 import java.util.List;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import fr.soro.entities.Bibliotheque;
 import fr.soro.entities.Emprunt;
 import fr.soro.entities.Exemplaire;
 import fr.soro.entities.User;
@@ -64,6 +56,21 @@ public class EmpruntService {
 
 	public List<Emprunt> getAllEmprunt() {
 		return this.empruntRepository.findAll();
+	}
+	
+	public List<Emprunt> getAllExpireEmprunt() {
+		List<Emprunt> emprunts = empruntRepository.findAll();
+		List<Emprunt> empruntsExpirer = new ArrayList<Emprunt>();
+		for(Emprunt emprunt : emprunts) 
+		{
+			Date dateDebut = emprunt.getDateDebut();
+			Date dateEcheance = emprunt.getDateEcheance();
+			if (dateDebut.after(dateEcheance))
+			{
+				empruntsExpirer.add(emprunt);					
+			}			
+		}		
+		return empruntsExpirer;
 	}
 	
 	public Emprunt save(Long idUser, Long idExmplaire, Emprunt emprunt) {
