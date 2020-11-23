@@ -1,5 +1,6 @@
 package fr.soro.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.soro.entities.Emprunt;
 import fr.soro.entities.User;
 import fr.soro.repositories.UserRepository;
 
@@ -16,6 +18,8 @@ public class UserService {
 	@Resource
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	EmpruntService empruntService;
 	
 	public User getUser(Long id) {
 		return this.userRepository.getOne(id);
@@ -27,6 +31,14 @@ public class UserService {
 	
 	public List<User> getAllUser() {
 		return this.userRepository.findAll();
+	}
+	
+	public List<User> getUsersEmpruntExpire(List<Emprunt> expireEmprunts) {
+		List<User> usersEmpruntExpire = new ArrayList<User>();
+		for(Emprunt empExpire: expireEmprunts)  {
+			usersEmpruntExpire.add(empExpire.getUser());
+		}
+	return usersEmpruntExpire;
 	}
 	
 	public User updateUser(Long id, User user) {

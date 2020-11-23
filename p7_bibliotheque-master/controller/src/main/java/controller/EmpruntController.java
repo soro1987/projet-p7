@@ -19,16 +19,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import fr.soro.entities.Emprunt;
 import fr.soro.entities.Exemplaire;
+import fr.soro.entities.User;
 import fr.soro.service.EmpruntService;
+import fr.soro.service.UserService;
 
 @CrossOrigin("*")
 @RestController
 public class EmpruntController {
 	
 	@Autowired
-	public EmpruntService empruntService;
-	
-	
+	private EmpruntService empruntService;
+	@Autowired
+	private UserService userService;
 	
 	@PostMapping(value = "/emprunts/{idUser}/{idExemplaire}")
 	public ResponseEntity<Emprunt> createEmprunt(
@@ -71,6 +73,13 @@ public class EmpruntController {
 	public ResponseEntity<List<Emprunt>> getExpireEmprunt() {
 		List<Emprunt> empruntsExpire = empruntService.getAllExpireEmprunt();
 		return new ResponseEntity<List<Emprunt>>(empruntsExpire, HttpStatus.FOUND);
+	}
+	
+	@GetMapping(value = "/emprunts/user/expired")
+	public ResponseEntity<List<User>> getUsersEmpruntExpire() {
+		List<Emprunt> empruntsExpire = empruntService.getAllExpireEmprunt();
+		List<User> empruntsExpireUsers = userService.getUsersEmpruntExpire(empruntsExpire);
+		return new ResponseEntity<List<User>>(empruntsExpireUsers, HttpStatus.FOUND);
 	}
 	
 	
