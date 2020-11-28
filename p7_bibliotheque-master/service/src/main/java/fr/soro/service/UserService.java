@@ -41,6 +41,8 @@ public class UserService {
 	return usersEmpruntExpire;
 	}
 	
+	
+	
 	public User updateUser(Long id, User user) {
 		User userUpdated = this.getUser(id);
 		userUpdated.setNom(user.getNom());

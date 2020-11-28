@@ -66,7 +66,7 @@ public class ExemplaireController {
 		return new ResponseEntity<Exemplaire>(exemplairesFound, HttpStatus.FOUND);
 	}
 	
-	@GetMapping("/ouvrages/{id}/exemplairecount")
+	@GetMapping("/ouvrages/exemplairecount/{id}")
 	public Map<String, Object> getOuvrageCountBybibliotheque(@PathVariable(value = "id") Long ouvrageId){
 		Map<String, Object> ouvrageCountBybiblio = exemplaireService.getExempleCountByBibliotheque(ouvrageId);
 	return ouvrageCountBybiblio;

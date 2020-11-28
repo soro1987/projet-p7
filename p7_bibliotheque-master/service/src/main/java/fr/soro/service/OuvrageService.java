@@ -13,6 +13,12 @@ public class OuvrageService {
 			
 		@Autowired
 		private OuvrageRepository ouvrageRepository;
+
+		public void uploadImage(byte[] image,Long id){
+          Ouvrage ouvrage = ouvrageRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Ouvrage "+id+" not found"));
+          ouvrage.setImage(image);
+          ouvrageRepository.saveAndFlush(ouvrage);
+		}
 		
 		public List<Ouvrage> getByTitreAuteur(String motcle) {
 			return ouvrageRepository.findByTitreAuteur("%"+motcle+"%","%"+motcle+"%");

@@ -101,7 +101,15 @@ public class EmpruntController {
 		return new ResponseEntity<List<Emprunt>>(empruntsFound, HttpStatus.FOUND);
 	}
 	
-	@PutMapping(value = "/emprunts-prolongation/{idEmprunt}")
+//	@PutMapping(value = "/employees/{id}")
+//	public ResponseEntity<EmployeeVO> updateEmployee(@PathVariable("id") int id
+//	                ,EmployeeVO employee) 
+//	{
+//	    //TODO: Save employee details
+//	    return new ResponseEntity<EmployeeVO>(employee, HttpStatus.OK);
+//	}
+	
+	@PutMapping(value = "/emprunts/prolongation/{idEmprunt}")
 	public ResponseEntity<Emprunt> getProlongation(@PathVariable(value = "idEmprunt") Long idEmprunt) {
 		Emprunt empruntsFound = empruntService.setProlongation(idEmprunt);
 		return new ResponseEntity<Emprunt>(empruntsFound, HttpStatus.FOUND);

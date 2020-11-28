@@ -7,30 +7,51 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import fr.soro.repositories.OuvrageRepository;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.soro.entities.Ouvrage;
 import fr.soro.service.OuvrageService;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+@AllArgsConstructor
 @RestController
 public class OuvrageController {
 	
-	@Resource
+
 	private OuvrageService ouvrageService;
-	
-		
+	private OuvrageRepository ouvrageRepository;
+
+
+	@PostMapping(value = "/ouvrages/{id}/image")
+	@SneakyThrows
+	public ResponseEntity<String> uploadImage(@RequestPart("file") MultipartFile file, @PathVariable Long id)
+	{
+		ouvrageService.uploadImage(file.getBytes(),id);
+		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+				.path("/ouvrages/")
+				.path(id.toString())
+				.path("/image")
+				.toUriString();
+		return ResponseEntity.ok(fileDownloadUri);
+	}
+
+	@GetMapping(value = "/ouvrages/{id}/image")
+	public ResponseEntity<byte[]> downloadImage(@PathVariable Long id)
+	{
+		return ouvrageRepository.findById(id)
+				.map(ouvrage -> ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; id="+id).body(ouvrage.getImage()))
+				.orElseThrow(() -> new IllegalArgumentException("Ouvrage "+id+" not found"));
+	}
+
+
 	
 	@RequestMapping(value="/search/{motcle}", method = {RequestMethod.GET})
 	public List<Ouvrage> search(@PathVariable(value = "motcle")String motcle){	

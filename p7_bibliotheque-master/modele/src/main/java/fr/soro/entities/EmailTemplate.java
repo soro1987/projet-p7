@@ -3,9 +3,9 @@ package fr.soro.entities;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 
-/*
- * @Author SORO Amet
- */
+
+
+
 
 
 
