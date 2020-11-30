@@ -1,0 +1,5 @@
+fr\soro\service\ExemplaireService.class
+fr\soro\service\UserService.class
+fr\soro\service\EmpruntService.class
+fr\soro\service\OuvrageService.class
+fr\soro\service\BibliothequeService.class

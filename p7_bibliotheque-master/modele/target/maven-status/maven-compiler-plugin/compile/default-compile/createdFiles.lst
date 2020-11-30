@@ -1,0 +1,6 @@
+fr\soro\entities\Bibliotheque.class
+fr\soro\entities\User$UserBuilder.class
+fr\soro\entities\User.class
+fr\soro\entities\Emprunt.class
+fr\soro\entities\Ouvrage.class
+fr\soro\entities\Exemplaire.class

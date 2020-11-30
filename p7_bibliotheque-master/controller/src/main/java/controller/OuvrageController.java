@@ -1,25 +1,20 @@
 package controller;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
-
+import fr.soro.entities.Ouvrage;
 import fr.soro.repositories.OuvrageRepository;
+import fr.soro.service.OuvrageService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import fr.soro.entities.Ouvrage;
-import fr.soro.service.OuvrageService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -53,10 +48,15 @@ public class OuvrageController {
 
 
 	
+	@RequestMapping(value="/category/{categorie}", method = {RequestMethod.GET})
+	public List<Ouvrage> getCategory(@PathVariable(value = "categorie")String categorie){
+		return ouvrageService.getByCategorie(categorie);
+	}
+
 	@RequestMapping(value="/search/{motcle}", method = {RequestMethod.GET})
-	public List<Ouvrage> search(@PathVariable(value = "motcle")String motcle){	
+	public List<Ouvrage> search(@PathVariable(value = "motcle")String motcle){
 		return ouvrageService.getByTitreAuteur(motcle);
-	}	
+	}
 	
 	
 		@PostMapping(value = "/ouvrages")
@@ -107,12 +107,7 @@ public class OuvrageController {
 			List<Ouvrage> ouvrageFound = ouvrageService.getByAuteur(auteur);
 			return new ResponseEntity<List<Ouvrage>>(ouvrageFound, HttpStatus.FOUND);
 		}
-		
-		@GetMapping(value = "/ouvrages-cat/{categorie}")
-		public ResponseEntity<List<Ouvrage>> getByCategorie(@PathVariable(value = "categorie") String categorie) {
-			List<Ouvrage> ouvrageFound = ouvrageService.getByCategorie(categorie);
-			return new ResponseEntity<List<Ouvrage>>(ouvrageFound, HttpStatus.FOUND);
-		}
+
 		
 		@GetMapping(value = "/ouvrages/{parution}")
 		public ResponseEntity<List<Ouvrage>> getByParution(@PathVariable(value = "parution") Date parution) {

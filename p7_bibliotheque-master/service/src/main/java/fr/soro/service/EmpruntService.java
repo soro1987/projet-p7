@@ -1,17 +1,18 @@
 package fr.soro.service;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import fr.soro.entities.Emprunt;
 import fr.soro.entities.Exemplaire;
 import fr.soro.entities.User;
 import fr.soro.repositories.EmpruntRepository;
 import fr.soro.repositories.ExemplaireRepository;
 import fr.soro.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 
@@ -76,23 +77,16 @@ public class EmpruntService {
 	public Emprunt save(Long idUser, Long idExmplaire, Emprunt emprunt) {
 //		Emprunt emprunt = new Emprunt();
 		emprunt.setDateDebut(new Date());
-		
 		Calendar calendrier = Calendar.getInstance();
 		Date dateCourante = emprunt.getDateDebut();
 		calendrier.setTime(dateCourante);
 		calendrier.add(Calendar.HOUR, 24*28);
 		emprunt.setDateEcheance(calendrier.getTime());
-		
 		User user = this.userRepository.getOne(idUser);
 		emprunt.setUser(user);
-		
 		Exemplaire exemplaire = this.exemplaireRepository.getExemplaireById(idExmplaire);
-		
 		emprunt.getExemplaires().add(exemplaire);
 		exemplaire.setDisponible(false);
-		
-		
-		
 		Emprunt empruntSaved  = this.empruntRepository.save(emprunt);
 		user.getEmprunts().add(empruntSaved);
 		exemplaire.setEmprunt(empruntSaved);
@@ -114,6 +108,14 @@ public class EmpruntService {
 			this.empruntRepository.save(emprunt);
 		}
 		return emprunt;
+	}
+
+	public void delete(Long idEmprunt,Long idExmplaire) {
+		Exemplaire exemplaire = this.exemplaireRepository.getExemplaireById(idExmplaire);
+		exemplaire.setEmprunt(null);
+		exemplaire.setDisponible(true);
+		this.exemplaireRepository.save(exemplaire);
+		this.empruntRepository.deleteById(idEmprunt);
 	}
 		 
 	

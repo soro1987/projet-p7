@@ -1,21 +1,18 @@
 package fr.soro.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import fr.soro.entities.Bibliotheque;
 import fr.soro.entities.Exemplaire;
 import fr.soro.entities.Ouvrage;
 import fr.soro.repositories.BibliothequeRepository;
 import fr.soro.repositories.ExemplaireRepository;
 import fr.soro.repositories.OuvrageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ExemplaireService {
@@ -35,12 +32,19 @@ public class ExemplaireService {
 //	public List<Exemplaire> getAllByBiblio(Bibliotheque biblio ,Long biblioId){
 //		return exemplaireRepository.findByIdBibliotheque(biblio,biblioId);
 //	}
-	
+
+	public boolean isDisponible(Long idExemplaire){
+		Exemplaire exemplaire = this.exemplaireRepository.getOne(idExemplaire);
+	if (exemplaire.isDisponible() == false){
+		return false;
+	}else return true;
+   }
 	public void delete(Long id) {
 		this.exemplaireRepository.deleteById(id);
 	}
 	
-	public Exemplaire save(Long idOuvrage, Long idBiblio, Exemplaire exemplaire) {
+	public Exemplaire save(Long idOuvrage, Long idBiblio) {
+		Exemplaire exemplaire = new Exemplaire();
 		Ouvrage ouvrage = this.ouvrageRepository.getOne(idOuvrage);
 		Bibliotheque bibliotheque = this.bibliothequeRepository.getOne(idBiblio);
 		exemplaire.setDisponible(true);

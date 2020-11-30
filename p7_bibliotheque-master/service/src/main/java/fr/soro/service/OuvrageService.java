@@ -1,12 +1,15 @@
 package fr.soro.service;
 
-import java.util.Date;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import fr.soro.entities.Ouvrage;
 import fr.soro.repositories.OuvrageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
+@Transactional
 @Service
 public class OuvrageService {
 	
@@ -23,6 +26,11 @@ public class OuvrageService {
 		public List<Ouvrage> getByTitreAuteur(String motcle) {
 			return ouvrageRepository.findByTitreAuteur("%"+motcle+"%","%"+motcle+"%");
 		}
+
+	public List<Ouvrage> getByCategorie(String categorie) {
+		System.out.println("========================================================================="+categorie);
+		return ouvrageRepository.findByCategorieContains(categorie);
+	}
 		
 		public Ouvrage getOne(Long id) {
 			return ouvrageRepository.getOne(id);
@@ -40,11 +48,7 @@ public class OuvrageService {
 		public List<Ouvrage> getByAuteur(String auteur) {
 			return ouvrageRepository.findByAuteur(auteur);
 		}
-		
-		public List<Ouvrage> getByCategorie(String categorie) {
-			return ouvrageRepository.findByCategorie(categorie);
-		}
-		
+
 		public List<Ouvrage> getByParution(Date parution) {
 			return ouvrageRepository.findByDateParution(parution);
 		}

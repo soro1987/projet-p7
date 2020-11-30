@@ -1,27 +1,18 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-
+import fr.soro.entities.Emprunt;
+import fr.soro.entities.User;
+import fr.soro.service.EmpruntService;
+import fr.soro.service.ExemplaireService;
+import fr.soro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import fr.soro.entities.Emprunt;
-import fr.soro.entities.Exemplaire;
-import fr.soro.entities.User;
-import fr.soro.service.EmpruntService;
-import fr.soro.service.UserService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -29,6 +20,10 @@ public class EmpruntController {
 	
 	@Autowired
 	private EmpruntService empruntService;
+
+	@Autowired
+	private ExemplaireService exemplaireService;
+
 	@Autowired
 	private UserService userService;
 	
@@ -39,14 +34,17 @@ public class EmpruntController {
 			@RequestBody Emprunt emprunt
 		)
 	{
+		if (!exemplaireService.isDisponible(idExemplaire)){
+			return new ResponseEntity( HttpStatus.NOT_ACCEPTABLE);
+		}
 		Emprunt empruntsSaved = empruntService.save(idUser, idExemplaire, emprunt);
  		return new ResponseEntity<Emprunt>(empruntsSaved, HttpStatus.CREATED);
  	}
-	
-	@DeleteMapping(value = "/emprunts")
-	public ResponseEntity<Void> deleteEmprunt(@RequestParam(value = "id", required = true) Long id) {
-		
-		empruntService.deleted(id);
+
+
+	@DeleteMapping(value = "/emprunts/delete/{empruntId}/{exemplaireId}")
+	public ResponseEntity<Void> deleteEmprunt(@PathVariable(value = "exemplaireId") Long exemplaireId,@PathVariable(value = "empruntId") Long empruntId) {
+		empruntService.delete( empruntId,exemplaireId);
 		return new ResponseEntity<Void>(HttpStatus.GONE);
  	}
 
