@@ -9,7 +9,6 @@
 	</parent>
 	<artifactId>service</artifactId>
 	<dependencies>
-
 		<dependency>
 			<groupId>fr.soro</groupId>
 			<artifactId>modele</artifactId>
@@ -18,8 +17,6 @@
 			<groupId>fr.soro</groupId>
 			<artifactId>consumer</artifactId>
 		</dependency>
-		
-		
 	</dependencies>
 
 </project>

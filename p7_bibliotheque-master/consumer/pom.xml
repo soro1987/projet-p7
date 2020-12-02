@@ -9,8 +9,6 @@
 	</parent>
 	<artifactId>consumer</artifactId>
 	<dependencies>
-
-
 		<dependency>
 			<groupId>fr.soro</groupId>
 			<artifactId>modele</artifactId>
